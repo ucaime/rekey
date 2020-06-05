@@ -1,0 +1,8 @@
+version: "Apple Swift version 5.2 (swiftlang-1103.0.32.1 clang-1103.0.32.29)"
+options: "a9d384a0ea1317ba655db0d49ab8881b"
+build_time: [1591211385, 103151000]
+inputs:
+  "/Users/layne/Projects/xcode/Rekey/Rekey/NSDraggingInfo+FilePathURL.swift": [9223372036, 854775807]
+  "/Users/layne/Projects/xcode/Rekey/Rekey/ViewController.swift": [9223372036, 854775807]
+  "/Users/layne/Projects/xcode/Rekey/Rekey/DragDropView.swift": [9223372036, 854775807]
+  "/Users/layne/Projects/xcode/Rekey/Rekey/AppDelegate.swift": [9223372036, 854775807]

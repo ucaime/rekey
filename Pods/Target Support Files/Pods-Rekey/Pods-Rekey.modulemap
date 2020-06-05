@@ -1,0 +1,6 @@
+framework module Pods_Rekey {
+  umbrella header "Pods-Rekey-umbrella.h"
+
+  export *
+  module * { export * }
+}
