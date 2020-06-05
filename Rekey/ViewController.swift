@@ -11,6 +11,7 @@ import Cocoa
 class ViewController: NSViewController {
 
     @IBOutlet weak var dragDropView: DragDropView!
+    @IBOutlet weak var ProgressIndicator: NSProgressIndicator!
     
     override func viewDidLoad() {
         
@@ -19,18 +20,17 @@ class ViewController: NSViewController {
         //初始化拖拽逻辑
         dragDropView.acceptedFileExtensions = ["key"]
         dragDropView.usedArrowImage = true
+        
+        var allFiles:[URL] = []
         dragDropView.setup({ (file) in
-            //print(file.lastPathComponent)
-            self.doRekey(file)
-            
+            allFiles.append(file)
+            self.doRekeys(allFiles)
         }) { (files) in
-            files.forEach({(file) in
-                self.doRekey(file)
-            })
+            allFiles = files
+            self.doRekeys(allFiles)
         }
+
     }
-    
-    
 
     override var representedObject: Any? {
         didSet {
@@ -39,10 +39,29 @@ class ViewController: NSViewController {
     }
     
     public func doRekey(_ file:URL) {
-        Thread.detachNewThread {
-            RekeyFile()?.reduceFile(file)
-            self.notifine(file)
+        RekeyFile()?.reduceFile(file)
+        self.notifine(file)
+    }
+    
+    public func doRekeys(_ files:[URL]) {
+        self.ProgressIndicator.isHidden = false
+        self.ProgressIndicator.startAnimation(nil)
+        self.dragDropView.isHidden = false
+        
+        let group = DispatchGroup()
+        group.enter()
+        DispatchQueue.global(qos: .userInitiated).async {
+            files.forEach({(file) in
+                self.doRekey(file)
+            })
+            group.leave()
         }
+        group.notify(queue: .main, execute: {
+            self.ProgressIndicator.isHidden = true
+            self.ProgressIndicator.stopAnimation(nil)
+            
+            self.dragDropView.isHidden = false
+        })
     }
     
     public func notifine(_ file:URL) {
@@ -57,9 +76,10 @@ class ViewController: NSViewController {
     func userNotificationCenter(center: NSUserNotificationCenter, shouldPresentNotification notification: NSUserNotification) -> Bool {
         return true
     }
-
-
-
+    @IBAction func openLink(_ sender: Any) {
+        let url = URL(string: "https://www.yuque.com/layne.app/rekey/intro")!
+        if NSWorkspace.shared.open(url) {
+            print("default browser was successfully opened")
+        }
+    }
 }
-
-//
