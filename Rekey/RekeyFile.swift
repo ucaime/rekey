@@ -35,10 +35,10 @@ class RekeyFile {
         //文件解压
         SSZipArchive.unzipFile(atPath: fileURL.path, toDestination: tmpProjectDir)
         
-        //compess()
+        compess()
 
         //生成新文件
-        //SSZipArchive.createZipFile(atPath: self.newFile, withContentsOfDirectory: tmpProjectDir)
+        SSZipArchive.createZipFile(atPath: self.newFile, withContentsOfDirectory: tmpProjectDir)
 
         //垃圾清理
         let manager = FileManager.default
