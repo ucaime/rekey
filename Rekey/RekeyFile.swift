@@ -31,7 +31,6 @@ class RekeyFile {
         self.newFile = self.newName()
         self.tmpProjectDir = tmpDir + "/" + fileName
         
-        
         //文件解压
         SSZipArchive.unzipFile(atPath: fileURL.path, toDestination: tmpProjectDir)
         

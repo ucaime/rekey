@@ -39,14 +39,15 @@ class ViewController: NSViewController {
     }
     
     public func doRekey(_ file:URL) {
-        RekeyFile()?.reduceFile(file)
+        let rekeyfile = RekeyFile()
+        rekeyfile!.reduceFile(file)
         self.notifine(file)
     }
     
     public func doRekeys(_ files:[URL]) {
         self.ProgressIndicator.isHidden = false
         self.ProgressIndicator.startAnimation(nil)
-        self.dragDropView.isHidden = false
+        self.dragDropView.isHidden = true
         
         let group = DispatchGroup()
         group.enter()
@@ -66,7 +67,7 @@ class ViewController: NSViewController {
     
     public func notifine(_ file:URL) {
         let notification = NSUserNotification()
-        notification.title = "演示文稿优化压缩"
+        notification.title = "处理完成"
         notification.informativeText = file.lastPathComponent + " 处理完成"
         //notification.responsePlaceholder = "Placeholder"
 
